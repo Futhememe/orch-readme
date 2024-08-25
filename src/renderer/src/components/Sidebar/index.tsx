@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { SidebarSimple } from '@phosphor-icons/react'
 // import { CreatePage } from './CreatePage'
 // import { Profile } from './Profile'
-// import { Search } from './Search'
+import { Search } from './Search'
 // import { useQuery } from '@tanstack/react-query'
 
 export function Sidebar(): JSX.Element {
@@ -17,10 +17,10 @@ export function Sidebar(): JSX.Element {
   // })
 
   return (
-    <Collapsible.Content className="bg-rotion-800 flex-shrink-0 border-r border-rotion-600 h-screen relative group data-[state=open]:animate-slideIn data-[state=closed]:animate-slideOut overflow-hidden">
+    <Collapsible.Content className="flex-shrink-0 border-r border-grey-600 h-screen relative group data-[state=open]:animate-slideIn data-[state=closed]:animate-slideOut overflow-hidden">
       <Collapsible.Trigger
         className={clsx(
-          'absolute h-5 w-5 right-4 text-grey-600 hover:text-rotion-50 inline-flex items-center justify-center z-10',
+          'absolute h-5 w-5 right-4 text-grey-800 hover:text-grey-800/70 inline-flex items-center justify-center z-10',
           {
             'top-[1.125rem]': isMacOS,
             'top-6': !isMacOS
@@ -30,12 +30,18 @@ export function Sidebar(): JSX.Element {
         <SidebarSimple className="h-4 w-4" />
       </Collapsible.Trigger>
 
-      {/* <div
-        className={clsx('region-drag h-14', {
+      <div
+        className={clsx('region-drag h-6', {
           block: isMacOS,
           hidden: !isMacOS
         })}
-      ></div> */}
+      />
+      <div
+        className={clsx('h-6', {
+          block: isMacOS,
+          hidden: !isMacOS
+        })}
+      />
 
       <div
         className={clsx(
@@ -45,10 +51,10 @@ export function Sidebar(): JSX.Element {
           }
         )}
       >
-        {/* <Profile />
+        {/* <Profile /> */}
         <Search />
 
-        <Navigation.Root>
+        {/* <Navigation.Root>
           <Navigation.Section>
             <Navigation.SectionTitle>Workspace</Navigation.SectionTitle>
             <Navigation.SectionContent>
@@ -59,9 +65,9 @@ export function Sidebar(): JSX.Element {
               ))}
             </Navigation.SectionContent>
           </Navigation.Section>
-        </Navigation.Root>
+        </Navigation.Root> */}
 
-        <CreatePage /> */}
+        {/* <CreatePage /> */}
       </div>
     </Collapsible.Content>
   )
