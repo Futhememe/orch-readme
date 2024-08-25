@@ -14,9 +14,8 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        sans: 'Inter, sans-serif'
+        sans: 'Satoshi, sans-serif'
       },
-
       colors: {
         backgroundgrey: {
           500: '#F8F5F1'
@@ -25,16 +24,16 @@ module.exports = {
           500: '#333333'
         },
         grey: {
-          50: '#ebeaed',
-          100: '#c1bfc7',
-          200: '#a3a0ac',
-          300: '#797486',
-          400: '#5f596e',
-          500: '#37304a',
-          600: '#322c43',
-          700: '#272235',
-          800: '#1e1a29',
-          900: '#17141f'
+          50: '#FEFEFE',
+          100: '#FDFCFB',
+          200: '#FCFAF9',
+          300: '#FAF8F6',
+          400: '#F9F7F4',
+          500: '#F8F5F1',
+          600: '#E2DFDB',
+          700: '#B0AEAB',
+          800: '#888785',
+          900: '#686765'
         },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
