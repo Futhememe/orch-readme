@@ -1,9 +1,8 @@
-// import * as Navigation from './Navigation'
+import * as Navigation from './Navigation'
 import * as Collapsible from '@radix-ui/react-collapsible'
 import clsx from 'clsx'
 import { SidebarSimple } from '@phosphor-icons/react'
 // import { CreatePage } from './CreatePage'
-// import { Profile } from './Profile'
 import { Search } from './Search'
 // import { useQuery } from '@tanstack/react-query'
 
@@ -45,27 +44,26 @@ export function Sidebar(): JSX.Element {
 
       <div
         className={clsx(
-          'flex-1 flex flex-col gap-8 h-full w-[240px] group-data-[state=open]:opacity-100 group-data-[state=closed]:opacity-0 transition-opacity duration-200',
+          'flex-1 flex flex-col gap-4 h-full w-[240px] group-data-[state=open]:opacity-100 group-data-[state=closed]:opacity-0 transition-opacity duration-200',
           {
             'pt-6': !isMacOS
           }
         )}
       >
-        {/* <Profile /> */}
         <Search />
-
-        {/* <Navigation.Root>
+        <Navigation.Root>
           <Navigation.Section>
-            <Navigation.SectionTitle>Workspace</Navigation.SectionTitle>
+            <Navigation.SectionTitle>Projects</Navigation.SectionTitle>
             <Navigation.SectionContent>
-              {data?.map((document) => (
+              {/* {data?.map((document) => (
                 <Navigation.Link to={`/document/${document.id}`} key={document.id}>
                   {document.title || 'Untitled'}
                 </Navigation.Link>
-              ))}
+              ))} */}
+              <Navigation.Link to="">Primeira pasta</Navigation.Link>
             </Navigation.SectionContent>
           </Navigation.Section>
-        </Navigation.Root> */}
+        </Navigation.Root>
 
         {/* <CreatePage /> */}
       </div>
