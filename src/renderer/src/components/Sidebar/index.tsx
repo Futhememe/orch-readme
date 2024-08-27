@@ -2,8 +2,8 @@ import * as Navigation from './Navigation'
 import * as Collapsible from '@radix-ui/react-collapsible'
 import clsx from 'clsx'
 import { SidebarSimple } from '@phosphor-icons/react'
-// import { CreatePage } from './CreatePage'
 import { Search } from './Search'
+import { CreateDocument } from './CreateDocument'
 // import { useQuery } from '@tanstack/react-query'
 
 export function Sidebar(): JSX.Element {
@@ -67,7 +67,7 @@ export function Sidebar(): JSX.Element {
           </Navigation.Section>
         </Navigation.Root>
 
-        {/* <CreatePage /> */}
+        <CreateDocument />
       </div>
     </Collapsible.Content>
   )
