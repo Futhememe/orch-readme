@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import logosrc from '@renderer/assets/orch-logo.svg'
 import { Sidebar } from '../../components/Sidebar'
+import { Header } from '../../components/Header'
 
 export function Default(): JSX.Element {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true)
@@ -16,6 +17,7 @@ export function Default(): JSX.Element {
     >
       {location.pathname !== '/' && <Sidebar />}
       <div className="flex-1 flex flex-col max-h-screen overflow-x-hidden">
+        {location.pathname !== '/' && <Header isSidebarOpen={isSidebarOpen} />}
         <Outlet />
       </div>
 
