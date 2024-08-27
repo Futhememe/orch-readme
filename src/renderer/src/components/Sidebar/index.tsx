@@ -26,7 +26,7 @@ export function Sidebar(): JSX.Element {
           }
         )}
       >
-        <SidebarSimple className="h-4 w-4" />
+        <SidebarSimple weight="bold" className="h-4 w-4" />
       </Collapsible.Trigger>
 
       <div
@@ -61,6 +61,8 @@ export function Sidebar(): JSX.Element {
                 </Navigation.Link>
               ))} */}
               <Navigation.Link to="">Primeira pasta</Navigation.Link>
+              <Navigation.Link to="">Segunda pasta</Navigation.Link>
+              <Navigation.Link to="">Draft</Navigation.Link>
             </Navigation.SectionContent>
           </Navigation.Section>
         </Navigation.Root>
