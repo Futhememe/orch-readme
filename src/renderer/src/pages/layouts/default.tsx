@@ -1,11 +1,12 @@
 import * as Collapsible from '@radix-ui/react-collapsible'
 import { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import logosrc from '@renderer/assets/orch-logo.svg'
 import { Sidebar } from '../../components/Sidebar'
 
 export function Default(): JSX.Element {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true)
+  const location = useLocation()
 
   return (
     <Collapsible.Root
@@ -13,7 +14,7 @@ export function Default(): JSX.Element {
       defaultOpen
       className="h-screen w-screen text-blackfont-500 flex"
     >
-      <Sidebar />
+      {location.pathname !== '/' && <Sidebar />}
       <div className="flex-1 flex flex-col max-h-screen overflow-x-hidden">
         <Outlet />
       </div>
