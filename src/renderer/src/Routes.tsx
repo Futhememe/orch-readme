@@ -3,6 +3,7 @@ import { Router, Route } from 'electron-router-dom'
 // import { Document } from './pages/document'
 import { Blank } from './pages/blank'
 import { Default } from './pages/layouts/default'
+import { Document } from './pages/document'
 
 export function Routes(): JSX.Element {
   return (
@@ -12,7 +13,7 @@ export function Routes(): JSX.Element {
           <Route path="/" element={<Blank />} />
 
           <Route path="/project/:id" element={<h1>Hello</h1>} />
-          <Route path="/document/:id" element={<h2>Sou uma doc</h2>} />
+          <Route path="/document/:id" element={<Document />} />
         </Route>
       }
     />
