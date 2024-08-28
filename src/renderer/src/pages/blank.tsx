@@ -10,7 +10,8 @@ export function Blank(): JSX.Element {
   const navigate = useNavigate()
 
   return (
-    <div className="items-center justify-center flex flex-1 flex-col">
+    <div className="items-center justify-center flex flex-1 flex-col relative top-0 ">
+      <div className="absolute h-14 w-full region-drag top-0" />
       <div className="relative items-center justify-center flex flex-col">
         <h2 className="text-[2.5rem] font-medium">Welcome to</h2>
         <h1 className="text-[4rem] font-[501]">Orch Readme</h1>
