@@ -12,6 +12,7 @@ import { EditorContent, JSONContent, useEditor } from '@tiptap/react'
 import js from 'highlight.js/lib/languages/javascript'
 import ts from 'highlight.js/lib/languages/typescript'
 import { common, createLowlight } from 'lowlight'
+import { FloatingPlaceholder } from '../FloatingPlaceholder'
 
 const lowlight = createLowlight(common)
 
@@ -72,15 +73,15 @@ export const Editor = ({ content, onContentUpdated, onCreateEditor }: IEditor): 
     autofocus: 'end',
     editorProps: {
       attributes: {
-        class: 'focus:outline-none prose prose-headings:mt-0'
+        class: 'focus:outline-none text-blackfont-500 prose prose-headings:mt-0'
       }
     }
   })
 
   return (
     <div>
-      {/* {editor && <FloatingPlaceholder editor={editor} />}
-      {editor && <FloatingMenu editor={editor} />}
+      {editor && <FloatingPlaceholder editor={editor} />}
+      {/* {editor && <FloatingMenu editor={editor} />}
       {editor && <BubbleMenu editor={editor} />} */}
       <EditorContent className="w-[65ch]" editor={editor} />
     </div>
