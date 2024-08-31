@@ -6,13 +6,11 @@ import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { EditorContent, JSONContent, useEditor } from '@tiptap/react'
-// import { BubbleMenu } from '../BubbleMenu'
-// import { FloatingMenu } from '../FloatingMenu'
-// import { FloatingPlaceholder } from '../FloatingPlaceholder'
 import js from 'highlight.js/lib/languages/javascript'
 import ts from 'highlight.js/lib/languages/typescript'
 import { common, createLowlight } from 'lowlight'
 import { FloatingPlaceholder } from '../FloatingPlaceholder'
+import { FloatingMenu } from '../FloatingMenu'
 
 const lowlight = createLowlight(common)
 
@@ -50,6 +48,7 @@ export const Editor = ({ content, onContentUpdated, onCreateEditor }: IEditor): 
       }),
       Underline,
       CodeBlockLowlight.configure({
+        defaultLanguage: 'js',
         lowlight
       })
     ],
@@ -81,8 +80,8 @@ export const Editor = ({ content, onContentUpdated, onCreateEditor }: IEditor): 
   return (
     <div>
       {editor && <FloatingPlaceholder editor={editor} />}
-      {/* {editor && <FloatingMenu editor={editor} />}
-      {editor && <BubbleMenu editor={editor} />} */}
+      {editor && <FloatingMenu editor={editor} />}
+      {/* {editor && <BubbleMenu editor={editor} />} */}
       <EditorContent className="w-[65ch]" editor={editor} />
     </div>
   )
