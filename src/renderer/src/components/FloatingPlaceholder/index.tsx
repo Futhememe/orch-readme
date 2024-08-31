@@ -30,7 +30,7 @@ export const FloatingPlaceholder = ({ editor, ...rest }: IFloatingMenu): JSX.Ele
         return true
       }}
     >
-      <p className="text-xs text-grey-700 font-medium">
+      <p className="text-sm text-grey-700 font-medium">
         Pressione &rsquo; / &rsquo; para abrir o menu
       </p>
     </FloatingMenu>

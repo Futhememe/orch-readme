@@ -37,46 +37,39 @@ export const FloatingMenu = ({ editor, ...rest }: IFloatingMenu): JSX.Element =>
       <Floating.Root>
         <Floating.Title title="Blocos basicos" />
         <Floating.Button
-          icon={<TextHOne size={32} />}
+          icon={<TextHOne weight="bold" size={16} />}
           title="Heading 1"
-          content="Big section heading"
           onClick={() => editor?.chain().focus().toggleHeading({ level: 1 }).run()}
         />
         <Floating.Button
-          icon={<TextHTwo size={32} />}
+          icon={<TextHTwo weight="bold" size={16} />}
           title="Heading 2"
-          content="A medium section heading"
           onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}
         />
         <Floating.Button
-          icon={<TextHThree size={32} />}
+          icon={<TextHThree weight="bold" size={16} />}
           title="Heading 3"
-          content="Small section heading"
           onClick={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()}
         />
         <Floating.Button
-          icon={<ListBullets size={32} />}
+          icon={<ListBullets weight="bold" size={16} />}
           title="Bullet list"
-          content="Create a simple bulleted list"
           onClick={() => editor?.chain().focus().toggleBulletList().run()}
         />
         <Floating.Button
-          icon={<ListNumbers size={32} />}
+          icon={<ListNumbers weight="bold" size={16} />}
           title="Numbered list"
-          content="Create a list with numbering"
           onClick={() => editor?.chain().focus().toggleOrderedList().run()}
         />
         <Floating.Button
-          icon={<Quotes size={32} />}
+          icon={<Quotes weight="bold" size={16} />}
           title="Quote"
-          content="Capture a quote"
           onClick={() => editor?.chain().focus().toggleBlockquote().run()}
         />
         <Floating.Title title="Blocos de midia" />
         <Floating.Button
-          icon={<Code size={32} />}
+          icon={<Code weight="bold" size={16} />}
           title="Code"
-          content="Capture a code snippet"
           onClick={() => editor?.chain().focus().toggleCodeBlock({ language: 'javascript' }).run()}
         />
       </Floating.Root>

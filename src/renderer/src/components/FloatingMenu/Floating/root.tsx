@@ -6,7 +6,7 @@ interface IFloatingRoot {
 
 export const FloatingRoot = ({ children }: IFloatingRoot): JSX.Element => {
   return (
-    <div className="max-w-xs w-80 max-h-72 gap-2 bg-rotion-800 border-rotion-500 border rounded-sm overflow-x-hidden overflow-y-auto">
+    <div className="max-w-xs w-56 max-h-72 gap-2 border-grey-600 border rounded-md overflow-x-hidden overflow-y-auto">
       {children}
     </div>
   )
