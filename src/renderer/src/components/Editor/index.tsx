@@ -11,6 +11,7 @@ import ts from 'highlight.js/lib/languages/typescript'
 import { common, createLowlight } from 'lowlight'
 import { FloatingPlaceholder } from '../FloatingPlaceholder'
 import { FloatingMenu } from '../FloatingMenu'
+import { BubbleMenu } from '../BubbleMenu'
 
 const lowlight = createLowlight(common)
 
@@ -81,7 +82,7 @@ export const Editor = ({ content, onContentUpdated, onCreateEditor }: IEditor): 
     <div>
       {editor && <FloatingPlaceholder editor={editor} />}
       {editor && <FloatingMenu editor={editor} />}
-      {/* {editor && <BubbleMenu editor={editor} />} */}
+      {editor && <BubbleMenu editor={editor} />}
       <EditorContent className="w-[65ch]" editor={editor} />
     </div>
   )
