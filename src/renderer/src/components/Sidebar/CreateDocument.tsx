@@ -45,7 +45,7 @@ export function CreateDocument(): JSX.Element {
       className="flex items-center mx-3 text-[15px] gap-1 text-grey-800 py-1 px-2 rounded-lg group"
     >
       <Plus weight="bold" className="h-4 w-4" />
-      new document
+      new project
     </button>
   )
 }

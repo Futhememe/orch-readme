@@ -16,7 +16,7 @@ export function Blank(): JSX.Element {
         <h2 className="text-[2.5rem] font-medium">Welcome to</h2>
         <h1 className="text-[4rem] font-[501]">Orch Readme</h1>
         <Button onClick={() => navigate('/document/novo')} variant="default" className="mt-[24px]">
-          Create document
+          Create documentation
         </Button>
         <p className="text-[1rem] mt-[14px]">or</p>
         <Button onClick={() => navigate('/project/novo')} variant="link">
