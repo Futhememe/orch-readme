@@ -4,7 +4,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogClose,
-  DialogFooter
+  DialogFooter,
+  DialogDescription
 } from '../../../shadcn/components/ui/dialog'
 import { useProjectControl } from '../../../contexts/project'
 import { Button } from '../../../shadcn/components/ui/button'
@@ -12,9 +13,16 @@ import { Folder } from '@phosphor-icons/react'
 import { Input } from '../../../shadcn/components/ui/input'
 import { Label } from '../../../shadcn/components/ui/label'
 import { useQuery } from '@tanstack/react-query'
+import { Controller, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { createProjectSchema } from './schema'
 
 export const CreateProjectModal = (): JSX.Element => {
   const { createProjectDialogOpen, closeCreateProjectDialog } = useProjectControl()
+
+  const { control, setValue } = useForm({
+    resolver: zodResolver(createProjectSchema)
+  })
 
   const { refetch: selectFolder } = useQuery({
     enabled: false,
@@ -30,7 +38,7 @@ export const CreateProjectModal = (): JSX.Element => {
     const { data } = await selectFolder()
 
     if (data?.success) {
-      console.log(data.data)
+      setValue('parh', data.data[0])
     }
   }
 
@@ -46,20 +54,43 @@ export const CreateProjectModal = (): JSX.Element => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create your new documentation</DialogTitle>
+          <DialogDescription>
+            Enter a name for the project and a folder for it to be created in. The project will be
+            created without being linked to the Orch Readme.
+          </DialogDescription>
         </DialogHeader>
 
-        <div className="flex flex-col space-y-2">
+        <div className="flex flex-col space-y-2 gap-2">
           <div className="grid flex-1 gap-2">
             <Label htmlFor="name">Project name</Label>
-            <Input id="name" placeholder="Your project name" />
+            <Controller
+              name="name"
+              control={control}
+              render={({ field }) => (
+                <Input {...field} required id="name" placeholder="Your project name" />
+              )}
+            />
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex space-x-2 items-end">
             <div className="grid flex-1 gap-2">
-              <Label htmlFor="project">Select project folder</Label>
-              <Input id="project" readOnly placeholder="/ path / to / example" />
+              <Label htmlFor="path">Select project folder</Label>
+              <Controller
+                name="path"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="path"
+                    required
+                    readOnly
+                    placeholder="/ path / to / example"
+                    value={field.value}
+                  />
+                )}
+              />
             </div>
-            <Button onClick={selectPorjectFolder} type="button" size="sm" className="px-3">
-              <Folder className="h-4 w-4" />
+            <Button onClick={selectPorjectFolder} type="button" size="icon" className="mb-[2px]">
+              <Folder className="h-5 w-5" />
             </Button>
           </div>
         </div>
