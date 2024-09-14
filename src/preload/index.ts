@@ -1,6 +1,11 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { IPC } from '../shared/constants/ipc'
-import { FetchAllProjectsResponse, SelectFolderToProjectResponse } from '../shared/types/ipc'
+import {
+  CreateProjectResponse,
+  CreateProjectRequest,
+  FetchAllProjectsResponse,
+  SelectFolderToProjectResponse
+} from '../shared/types/ipc'
 
 // Custom APIs for renderer
 export const api = {
@@ -10,15 +15,15 @@ export const api = {
 
   selectFolder(): Promise<SelectFolderToProjectResponse> {
     return ipcRenderer.invoke(IPC.ACTIONS.SELECT_FOLDER)
-  }
+  },
 
   // fetchDocument(req: FetchDocumentRequest): Promise<FetchDocumentResponse> {
   //   return ipcRenderer.invoke(IPC.DOCUMENTS.FETCH, req)
   // },
 
-  // createDocument(): Promise<CreateDocumentResponse> {
-  //   return ipcRenderer.invoke(IPC.DOCUMENTS.CREATE)
-  // },
+  createProject(req: CreateProjectRequest): Promise<CreateProjectResponse> {
+    return ipcRenderer.invoke(IPC.PROJECTS.CREATE, req)
+  }
 
   // saveDocument(req: SaveDocumentRequest): Promise<void> {
   //   return ipcRenderer.invoke(IPC.DOCUMENTS.SAVE, req)

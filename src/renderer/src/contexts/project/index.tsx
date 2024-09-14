@@ -1,5 +1,7 @@
 import { createContext, useContext, useState } from 'react'
 import { IProjectControlContext, IProjectControlProvider } from './types'
+import { useMutation } from '@tanstack/react-query'
+import { CreateProjectRequest } from '@/src/shared/types/ipc'
 
 const ProjectContext = createContext<IProjectControlContext>({
   openCreateProjectDialog: () => {},
@@ -19,7 +21,18 @@ export const ProjectControlProvider = ({ children }: IProjectControlProvider): J
     setCreateProjectDialogOpen(false)
   }
 
-  const createProject = (): void => {}
+  const { mutate: createNewProject } = useMutation({
+    mutationKey: ['directory'],
+    mutationFn: async ({ path, title }: CreateProjectRequest) => {
+      const response = await window.api.createProject({ path, title })
+
+      return response
+    }
+  })
+
+  const createProject = (path: string, projectName: string): void => {
+    createNewProject({ path, title: projectName })
+  }
 
   return (
     <ProjectContext.Provider

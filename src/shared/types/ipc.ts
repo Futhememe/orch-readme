@@ -8,7 +8,7 @@ export interface IProject {
  * Request
  */
 
-// export interface SaveDocumentRequest extends IDocument {}
+export interface CreateProjectRequest extends Omit<IProject, 'id'> {}
 
 // export interface FetchDocumentRequest {
 //   id: string
@@ -30,9 +30,9 @@ export interface FetchAllProjectsResponse {
 //   data: IDocument
 // }
 
-// export interface CreateDocumentResponse {
-//   data: IDocument
-// }
+export interface CreateProjectResponse {
+  data: IProject
+}
 
 export interface SelectFolderToProjectResponse {
   success: boolean
