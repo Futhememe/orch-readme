@@ -2,7 +2,15 @@ import { ipcMain } from 'electron'
 // import { randomUUID } from 'node:crypto'
 import { IPC } from '../shared/constants/ipc'
 import { store } from './store'
-import { FetchAllProjectsResponse } from '../shared/types/ipc'
+import {
+  CreateProjectRequest,
+  FetchAllProjectsResponse,
+  CreateProjectResponse,
+  IProject
+} from '../shared/types/ipc'
+import { randomUUID } from 'node:crypto'
+import { createRspressProject } from './utils/create-project'
+import { transformProjectName } from './utils/transform-project-name'
 
 ipcMain.handle(IPC.PROJECTS.FETCH_ALL, async (): Promise<FetchAllProjectsResponse> => {
   return {
@@ -10,13 +18,28 @@ ipcMain.handle(IPC.PROJECTS.FETCH_ALL, async (): Promise<FetchAllProjectsRespons
   }
 })
 
-// ipcMain.handle(
-//   IPC.DOCUMENTS.FETCH,
-//   async (_, { id }: FetchDocumentRequest): Promise<FetchDocumentResponse> => {
-//     const document = store.get(`documents.${id}`) as IDocument
+ipcMain.handle(
+  IPC.PROJECTS.CREATE,
+  async (_, { path, title }: CreateProjectRequest): Promise<CreateProjectResponse> => {
+    const id = randomUUID()
 
-//     return {
-//       data: document
-//     }
-//   }
-// )
+    const formattedText = transformProjectName(title)
+
+    const project: IProject = {
+      id,
+      title: formattedText,
+      path
+    }
+
+    await createRspressProject({
+      path,
+      title: formattedText
+    })
+
+    // store.set(`projects.${id}`, project)
+
+    return {
+      data: project
+    }
+  }
+)
