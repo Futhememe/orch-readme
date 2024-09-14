@@ -5,9 +5,22 @@ import plantsrc from '@renderer/assets/plant.svg'
 import reticencesleftsrc from '@renderer/assets/reticences-left.svg'
 import reticencesrightsrc from '@renderer/assets/reticences-right.svg'
 import { useNavigate } from 'react-router-dom'
+import { useProjectControl } from '../contexts/project'
 
 export function Blank(): JSX.Element {
   const navigate = useNavigate()
+
+  const { openCreateProjectDialog } = useProjectControl()
+
+  // const { refetch: selectFolder } = useQuery({
+  //   enabled: false,
+  //   queryKey: ['directory'],
+  //   queryFn: async () => {
+  //     const response = await window.api.selectFolder()
+
+  //     return response
+  //   }
+  // })
 
   return (
     <div className="items-center justify-center flex flex-1 flex-col relative top-0 ">
@@ -15,7 +28,7 @@ export function Blank(): JSX.Element {
       <div className="relative items-center justify-center flex flex-col">
         <h2 className="text-[2.5rem] font-medium">Welcome to</h2>
         <h1 className="text-[4rem] font-[501]">Orch Readme</h1>
-        <Button onClick={() => navigate('/document/novo')} variant="default" className="mt-[24px]">
+        <Button onClick={openCreateProjectDialog} variant="default" className="mt-[24px]">
           Create documentation
         </Button>
         <p className="text-[1rem] mt-[14px]">or</p>
