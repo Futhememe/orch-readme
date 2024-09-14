@@ -20,7 +20,7 @@ import { createProjectSchema } from './schema'
 export const CreateProjectModal = (): JSX.Element => {
   const { createProjectDialogOpen, closeCreateProjectDialog } = useProjectControl()
 
-  const { control, setValue } = useForm({
+  const { control, setValue, reset } = useForm({
     resolver: zodResolver(createProjectSchema)
   })
 
@@ -38,7 +38,7 @@ export const CreateProjectModal = (): JSX.Element => {
     const { data } = await selectFolder()
 
     if (data?.success) {
-      setValue('parh', data.data[0])
+      setValue('path', data.data[0])
     }
   }
 
@@ -47,6 +47,7 @@ export const CreateProjectModal = (): JSX.Element => {
       open={createProjectDialogOpen}
       onOpenChange={(open) => {
         if (!open) {
+          reset()
           closeCreateProjectDialog()
         }
       }}
@@ -84,7 +85,6 @@ export const CreateProjectModal = (): JSX.Element => {
                     required
                     readOnly
                     placeholder="/ path / to / example"
-                    value={field.value}
                   />
                 )}
               />
