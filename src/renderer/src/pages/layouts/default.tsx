@@ -5,6 +5,7 @@ import logosrc from '@renderer/assets/orch-logo.svg'
 import { Sidebar } from '../../components/Sidebar'
 import { Header } from '../../components/Header'
 import { ProjectControlProvider } from '../../contexts/project'
+import { CreateProjectModal } from '../../components/Modals'
 
 export function Default(): JSX.Element {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true)
@@ -12,6 +13,7 @@ export function Default(): JSX.Element {
 
   return (
     <ProjectControlProvider>
+      <CreateProjectModal />
       <Collapsible.Root
         onOpenChange={setIsSidebarOpen}
         defaultOpen
