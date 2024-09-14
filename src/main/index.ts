@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
 import { join } from 'path'
 import * as path from 'node:path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
@@ -6,6 +6,9 @@ import { createFileRoute, createURLRoute } from 'electron-router-dom'
 import icon from '../../resources/icon.png?asset'
 
 import './ipc'
+
+import { IPC } from '../shared/constants/ipc'
+import { SelectFolderToProjectResponse } from '../shared/types/ipc'
 
 function createWindow(): void {
   // Create the browser window.
@@ -31,6 +34,17 @@ function createWindow(): void {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
+
+    ipcMain.handle(IPC.ACTIONS.SELECT_FOLDER, async (): Promise<SelectFolderToProjectResponse> => {
+      const { canceled, filePaths } = await dialog.showOpenDialog(mainWindow, {
+        properties: ['openDirectory']
+      })
+      if (canceled) {
+        return { success: false, data: [] }
+      } else {
+        return { success: true, data: filePaths }
+      }
+    })
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
