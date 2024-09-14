@@ -12,16 +12,6 @@ export function Blank(): JSX.Element {
 
   const { openCreateProjectDialog } = useProjectControl()
 
-  // const { refetch: selectFolder } = useQuery({
-  //   enabled: false,
-  //   queryKey: ['directory'],
-  //   queryFn: async () => {
-  //     const response = await window.api.selectFolder()
-
-  //     return response
-  //   }
-  // })
-
   return (
     <div className="items-center justify-center flex flex-1 flex-col relative top-0 ">
       <div className="absolute h-14 w-full region-drag top-0" />
