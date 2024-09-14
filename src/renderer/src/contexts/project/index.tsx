@@ -4,6 +4,7 @@ import { IProjectControlContext, IProjectControlProvider } from './types'
 const ProjectContext = createContext<IProjectControlContext>({
   openCreateProjectDialog: () => {},
   createProject: () => {},
+  closeCreateProjectDialog: () => {},
   createProjectDialogOpen: false
 })
 
@@ -14,6 +15,10 @@ export const ProjectControlProvider = ({ children }: IProjectControlProvider): J
     setCreateProjectDialogOpen(true)
   }
 
+  const closeCreateProjectDialog = (): void => {
+    setCreateProjectDialogOpen(false)
+  }
+
   const createProject = (): void => {}
 
   return (
@@ -21,6 +26,7 @@ export const ProjectControlProvider = ({ children }: IProjectControlProvider): J
       value={{
         createProjectDialogOpen,
         openCreateProjectDialog,
+        closeCreateProjectDialog,
         createProject
       }}
     >
