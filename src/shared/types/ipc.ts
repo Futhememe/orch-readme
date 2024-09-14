@@ -33,3 +33,8 @@ export interface FetchAllProjectsResponse {
 // export interface CreateDocumentResponse {
 //   data: IDocument
 // }
+
+export interface SelectFolderToProjectResponse {
+  success: boolean
+  data: string[]
+}
