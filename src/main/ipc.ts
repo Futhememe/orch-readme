@@ -6,7 +6,8 @@ import {
   CreateProjectRequest,
   FetchAllProjectsResponse,
   CreateProjectResponse,
-  IProject
+  IProject,
+  DeleteProjectRequest
 } from '../shared/types/ipc'
 import { randomUUID } from 'node:crypto'
 import { configRspress } from './utils/create-project'
@@ -16,6 +17,11 @@ ipcMain.handle(IPC.PROJECTS.FETCH_ALL, async (): Promise<FetchAllProjectsRespons
   return {
     data: Object.values(store.get('projects'))
   }
+})
+
+ipcMain.handle(IPC.PROJECTS.DELETE, async (_, { id }: DeleteProjectRequest): Promise<void> => {
+  // @ts-ignore cant get id
+  store.delete(`projects.${id}`)
 })
 
 ipcMain.handle(

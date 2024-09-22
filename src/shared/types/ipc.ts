@@ -14,9 +14,9 @@ export interface CreateProjectRequest extends Omit<IProject, 'id'> {}
 //   id: string
 // }
 
-// export interface DeleteDocumentRequest {
-//   id: string
-// }
+export interface DeleteProjectRequest {
+  id: string
+}
 
 /**
  * Response
