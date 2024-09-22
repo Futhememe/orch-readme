@@ -4,16 +4,19 @@ import clsx from 'clsx'
 import { SidebarSimple } from '@phosphor-icons/react'
 import { Search } from './Search'
 import { CreateDocument } from './CreateDocument'
-// import { useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 
 export function Sidebar(): JSX.Element {
   const isMacOS = process.platform === 'darwin'
 
-  // const { data } = useQuery(['documents'], async () => {
-  //   const res = await window.api.fetchDocuments()
+  const { data } = useQuery({
+    queryKey: ['projects'],
+    queryFn: async () => {
+      const res = await window.api.fetchProjects()
 
-  //   return res.data
-  // })
+      return res.data
+    }
+  })
 
   return (
     <Collapsible.Content className="flex-shrink-0 border-r border-grey-600 h-screen relative group data-[state=open]:animate-slideIn data-[state=closed]:animate-slideOut overflow-hidden">
@@ -55,14 +58,14 @@ export function Sidebar(): JSX.Element {
           <Navigation.Section>
             <Navigation.SectionTitle>Projects</Navigation.SectionTitle>
             <Navigation.SectionContent>
-              {/* {data?.map((document) => (
-                <Navigation.Link to={`/document/${document.id}`} key={document.id}>
+              {data?.map((document) => (
+                <Navigation.Link to={`/project/${document.id}`} key={document.id}>
                   {document.title || 'Untitled'}
                 </Navigation.Link>
-              ))} */}
-              <Navigation.Link to="">Primeira pasta</Navigation.Link>
+              ))}
+              {/* <Navigation.Link to="">Primeira pasta</Navigation.Link>
               <Navigation.Link to="">Segunda pasta</Navigation.Link>
-              <Navigation.Link to="">Draft</Navigation.Link>
+              <Navigation.Link to="">Draft</Navigation.Link> */}
             </Navigation.SectionContent>
           </Navigation.Section>
         </Navigation.Root>
