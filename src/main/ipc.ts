@@ -9,7 +9,7 @@ import {
   IProject
 } from '../shared/types/ipc'
 import { randomUUID } from 'node:crypto'
-import { createRspressProject } from './utils/create-project'
+import { configRspress } from './utils/create-project'
 import { transformProjectName } from './utils/transform-project-name'
 
 ipcMain.handle(IPC.PROJECTS.FETCH_ALL, async (): Promise<FetchAllProjectsResponse> => {
@@ -31,12 +31,14 @@ ipcMain.handle(
       path
     }
 
-    await createRspressProject({
+    const { success } = await configRspress({
       path,
       title: formattedText
     })
 
-    // store.set(`projects.${id}`, project)
+    if (success) {
+      store.set(`projects.${id}`, project)
+    }
 
     return {
       data: project
