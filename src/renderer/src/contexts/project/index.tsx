@@ -1,8 +1,9 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { IProjectControlContext, IProjectControlProvider } from './types'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { CreateProjectRequest } from '@/src/shared/types/ipc'
 import { useNavigate } from 'react-router-dom'
+import { queryClient } from '../../lib/react-query'
 
 const ProjectContext = createContext<IProjectControlContext>({
   openCreateProjectDialog: () => {},
@@ -14,6 +15,7 @@ const ProjectContext = createContext<IProjectControlContext>({
 export const ProjectControlProvider = ({ children }: IProjectControlProvider): JSX.Element => {
   const [createProjectDialogOpen, setCreateProjectDialogOpen] = useState<boolean>(false)
   const navigate = useNavigate()
+  const query = useQueryClient(queryClient)
 
   const openCreateProjectDialog = (): void => {
     setCreateProjectDialogOpen(true)
@@ -29,6 +31,9 @@ export const ProjectControlProvider = ({ children }: IProjectControlProvider): J
       const response = await window.api.createProject({ path, title })
 
       return response
+    },
+    onSuccess: () => {
+      query.invalidateQueries({ queryKey: ['projects'] })
     }
   })
 
@@ -37,7 +42,6 @@ export const ProjectControlProvider = ({ children }: IProjectControlProvider): J
   }
 
   useEffect(() => {
-    console.log(projectResponse)
     if (projectResponse && projectResponse.data) {
       closeCreateProjectDialog()
       navigate(`project/${projectResponse?.data?.id}`)

@@ -53,6 +53,7 @@ export const CreateProjectModal = (): JSX.Element => {
   }
 
   const onSubmit = ({ path, name }: ICreateProjectSchema): void => {
+    formInteractions.reset()
     createProject(path, name)
   }
 
