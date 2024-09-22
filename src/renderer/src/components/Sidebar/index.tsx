@@ -7,12 +7,13 @@ import { CreateDocument } from './CreateDocument'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { IProject, IVerifiedProjects } from '@/src/shared/types/ipc'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export function Sidebar(): JSX.Element {
   const isMacOS = process.platform === 'darwin'
 
   const navigate = useNavigate()
+  const location = useLocation()
 
   const { data, refetch: refetchAllProjects } = useQuery({
     queryKey: ['projects'],
@@ -106,7 +107,11 @@ export function Sidebar(): JSX.Element {
             <Navigation.SectionTitle>Projects</Navigation.SectionTitle>
             <Navigation.SectionContent>
               {data?.map((document) => (
-                <Navigation.Link to={`/project/${document.id}`} key={document.id}>
+                <Navigation.Link
+                  to={`/project/${document.id}`}
+                  selected={location.pathname === `/project/${document.id}`}
+                  key={document.id}
+                >
                   {document.title || 'Untitled'}
                 </Navigation.Link>
               ))}
