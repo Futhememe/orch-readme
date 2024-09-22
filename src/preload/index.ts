@@ -4,7 +4,9 @@ import {
   CreateProjectResponse,
   CreateProjectRequest,
   FetchAllProjectsResponse,
-  SelectFolderToProjectResponse
+  SelectFolderToProjectResponse,
+  DeleteProjectRequest,
+  VerifyProjectPathsRequest
 } from '../shared/types/ipc'
 
 // Custom APIs for renderer
@@ -23,15 +25,19 @@ export const api = {
 
   createProject(req: CreateProjectRequest): Promise<CreateProjectResponse> {
     return ipcRenderer.invoke(IPC.PROJECTS.CREATE, req)
-  }
+  },
 
   // saveDocument(req: SaveDocumentRequest): Promise<void> {
   //   return ipcRenderer.invoke(IPC.DOCUMENTS.SAVE, req)
   // },
 
-  // deleteDocument(req: DeleteDocumentRequest): Promise<void> {
-  //   return ipcRenderer.invoke(IPC.DOCUMENTS.DELETE, req)
-  // },
+  deleteProject(req: DeleteProjectRequest): Promise<void> {
+    return ipcRenderer.invoke(IPC.PROJECTS.DELETE, req)
+  },
+
+  verifyProjectsPaths(req: VerifyProjectPathsRequest): Promise<void> {
+    return ipcRenderer.invoke(IPC.PROJECTS.VERIFY_PATHS, req)
+  }
 
   // onNewDocumentRequest(callback: () => void) {
   //   ipcRenderer.on('new-document', callback)

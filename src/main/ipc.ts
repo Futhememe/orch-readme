@@ -12,6 +12,7 @@ import {
 import { randomUUID } from 'node:crypto'
 import { configRspress } from './utils/create-project'
 import { transformProjectName } from './utils/transform-project-name'
+import { existsSync } from 'node:fs'
 
 ipcMain.handle(IPC.PROJECTS.FETCH_ALL, async (): Promise<FetchAllProjectsResponse> => {
   return {
@@ -25,22 +26,36 @@ ipcMain.handle(IPC.PROJECTS.DELETE, async (_, { id }: DeleteProjectRequest): Pro
 })
 
 ipcMain.handle(
+  IPC.PROJECTS.VERIFY_PATHS,
+  async (_, data: { projects: IProject[] }): Promise<void> => {
+    if (data?.projects.length > 0) {
+      data.projects?.map((project) => {
+        if (!existsSync(project.path)) {
+          // @ts-ignore cant get id
+          store.delete(`projects.${project.id}`)
+        }
+      })
+    }
+  }
+)
+
+ipcMain.handle(
   IPC.PROJECTS.CREATE,
   async (_, { path, title }: CreateProjectRequest): Promise<CreateProjectResponse> => {
     const id = randomUUID()
 
     const formattedText = transformProjectName(title)
 
-    const project: IProject = {
-      id,
-      title: formattedText,
-      path
-    }
-
-    const { success } = await configRspress({
+    const { success, path: fullPath } = await configRspress({
       path,
       title: formattedText
     })
+
+    const project: IProject = {
+      id,
+      title: formattedText,
+      path: fullPath
+    }
 
     if (success) {
       store.set(`projects.${id}`, project)

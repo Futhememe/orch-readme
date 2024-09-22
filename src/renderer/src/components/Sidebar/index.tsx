@@ -4,7 +4,9 @@ import clsx from 'clsx'
 import { SidebarSimple } from '@phosphor-icons/react'
 import { Search } from './Search'
 import { CreateDocument } from './CreateDocument'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { IProject } from '@/src/shared/types/ipc'
 
 export function Sidebar(): JSX.Element {
   const isMacOS = process.platform === 'darwin'
@@ -17,6 +19,17 @@ export function Sidebar(): JSX.Element {
       return res.data
     }
   })
+
+  const { mutate: verifyProjectsPaths } = useMutation({
+    mutationKey: ['project-verify'],
+    mutationFn: async (projects: IProject[]) => {
+      await window.api.verifyProjectsPaths({ projects })
+    }
+  })
+
+  useEffect(() => {
+    verifyProjectsPaths(data ?? [])
+  }, [data])
 
   return (
     <Collapsible.Content className="flex-shrink-0 border-r border-grey-600 h-screen relative group data-[state=open]:animate-slideIn data-[state=closed]:animate-slideOut overflow-hidden">

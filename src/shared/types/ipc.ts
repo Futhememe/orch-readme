@@ -18,6 +18,10 @@ export interface DeleteProjectRequest {
   id: string
 }
 
+export interface VerifyProjectPathsRequest {
+  projects: IProject[]
+}
+
 /**
  * Response
  */

@@ -5,7 +5,8 @@ export const IPC = {
     IMPORT: 'projects: import',
     CREATE: 'projects: create',
     SAVE: 'projects: save',
-    DELETE: 'projects: delete'
+    DELETE: 'projects: delete',
+    VERIFY_PATHS: 'projects: verify paths'
   },
   ACTIONS: {
     SELECT_FOLDER: 'actions: select-folder'
