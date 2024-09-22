@@ -6,11 +6,68 @@ import reticencesleftsrc from '@renderer/assets/reticences-left.svg'
 import reticencesrightsrc from '@renderer/assets/reticences-right.svg'
 import { useNavigate } from 'react-router-dom'
 import { useProjectControl } from '../contexts/project'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { IProject, IVerifiedProjects } from '@/src/shared/types/ipc'
+import { useEffect } from 'react'
 
 export function Blank(): JSX.Element {
   const navigate = useNavigate()
 
   const { openCreateProjectDialog } = useProjectControl()
+
+  const { data, refetch: refetchAllProjects } = useQuery({
+    queryKey: ['projects'],
+    queryFn: async () => {
+      const res = await window.api.fetchProjects()
+
+      return res.data
+    }
+  })
+
+  const { data: verifiedProjects, mutate: verifyProjectsPaths } = useMutation({
+    mutationKey: ['projects-verify'],
+    mutationFn: async (projects: IProject[]) => {
+      const response = await window.api.verifyProjectsPaths({ projects })
+
+      return response.projects
+    }
+  })
+
+  const { mutate: deleteProject } = useMutation({
+    mutationKey: ['project-delete'],
+    mutationFn: async (id: string) => {
+      await window.api.deleteProject({ id })
+    },
+    onSuccess: () => {
+      refetchAllProjects()
+    }
+  })
+
+  const removeInvalidaProjectPaths = (invalidProjects: IVerifiedProjects[]): void => {
+    invalidProjects?.map((project) => {
+      if (project.has_changed_path) {
+        deleteProject(project.id)
+      }
+    })
+  }
+
+  useEffect(() => {
+    if (verifiedProjects && verifiedProjects?.length > 0) {
+      const hasValidProject = verifiedProjects.some((project) => project.has_changed_path === false)
+
+      if (hasValidProject) {
+        const firstValidProject = verifiedProjects.find(
+          (project) => project.has_changed_path === false
+        )
+        navigate(`/project/${firstValidProject?.id}`)
+      }
+      removeInvalidaProjectPaths(verifiedProjects)
+    }
+  }, [verifiedProjects])
+
+  useEffect(() => {
+    verifyProjectsPaths(data ?? [])
+  }, [data])
 
   return (
     <div className="items-center justify-center flex flex-1 flex-col relative top-0 ">

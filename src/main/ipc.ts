@@ -7,7 +7,8 @@ import {
   FetchAllProjectsResponse,
   CreateProjectResponse,
   IProject,
-  DeleteProjectRequest
+  DeleteProjectRequest,
+  VerifyProjectPathsResponse
 } from '../shared/types/ipc'
 import { randomUUID } from 'node:crypto'
 import { configRspress } from './utils/create-project'
@@ -27,15 +28,20 @@ ipcMain.handle(IPC.PROJECTS.DELETE, async (_, { id }: DeleteProjectRequest): Pro
 
 ipcMain.handle(
   IPC.PROJECTS.VERIFY_PATHS,
-  async (_, data: { projects: IProject[] }): Promise<void> => {
+  async (_, data: { projects: IProject[] }): Promise<VerifyProjectPathsResponse> => {
     if (data?.projects.length > 0) {
-      data.projects?.map((project) => {
-        if (!existsSync(project.path)) {
-          // @ts-ignore cant get id
-          store.delete(`projects.${project.id}`)
-        }
-      })
+      return {
+        projects: data.projects?.map((project) => {
+          if (!existsSync(project.path)) {
+            return { ...project, has_changed_path: true }
+          }
+
+          return { ...project, has_changed_path: false }
+        })
+      }
     }
+
+    return { projects: [] }
   }
 )
 

@@ -22,6 +22,14 @@ export interface VerifyProjectPathsRequest {
   projects: IProject[]
 }
 
+export interface IVerifiedProjects extends IProject {
+  has_changed_path: boolean
+}
+
+export interface VerifyProjectPathsResponse {
+  projects: IVerifiedProjects[]
+}
+
 /**
  * Response
  */

@@ -6,7 +6,8 @@ import {
   FetchAllProjectsResponse,
   SelectFolderToProjectResponse,
   DeleteProjectRequest,
-  VerifyProjectPathsRequest
+  VerifyProjectPathsRequest,
+  VerifyProjectPathsResponse
 } from '../shared/types/ipc'
 
 // Custom APIs for renderer
@@ -35,7 +36,7 @@ export const api = {
     return ipcRenderer.invoke(IPC.PROJECTS.DELETE, req)
   },
 
-  verifyProjectsPaths(req: VerifyProjectPathsRequest): Promise<void> {
+  verifyProjectsPaths(req: VerifyProjectPathsRequest): Promise<VerifyProjectPathsResponse> {
     return ipcRenderer.invoke(IPC.PROJECTS.VERIFY_PATHS, req)
   }
 

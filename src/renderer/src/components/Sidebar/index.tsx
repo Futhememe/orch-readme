@@ -6,12 +6,15 @@ import { Search } from './Search'
 import { CreateDocument } from './CreateDocument'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
-import { IProject } from '@/src/shared/types/ipc'
+import { IProject, IVerifiedProjects } from '@/src/shared/types/ipc'
+import { useNavigate } from 'react-router-dom'
 
 export function Sidebar(): JSX.Element {
   const isMacOS = process.platform === 'darwin'
 
-  const { data } = useQuery({
+  const navigate = useNavigate()
+
+  const { data, refetch: refetchAllProjects } = useQuery({
     queryKey: ['projects'],
     queryFn: async () => {
       const res = await window.api.fetchProjects()
@@ -20,12 +23,43 @@ export function Sidebar(): JSX.Element {
     }
   })
 
-  const { mutate: verifyProjectsPaths } = useMutation({
-    mutationKey: ['project-verify'],
+  const { data: verifiedProjects, mutate: verifyProjectsPaths } = useMutation({
+    mutationKey: ['projects-verify'],
     mutationFn: async (projects: IProject[]) => {
-      await window.api.verifyProjectsPaths({ projects })
+      const response = await window.api.verifyProjectsPaths({ projects })
+
+      return response.projects
     }
   })
+
+  const { mutate: deleteProject } = useMutation({
+    mutationKey: ['project-delete'],
+    mutationFn: async (id: string) => {
+      await window.api.deleteProject({ id })
+    },
+    onSuccess: () => {
+      refetchAllProjects()
+    }
+  })
+
+  const removeInvalidaProjectPaths = (invalidProjects: IVerifiedProjects[]): void => {
+    invalidProjects?.map((project) => {
+      if (project.has_changed_path) {
+        deleteProject(project.id)
+      }
+    })
+  }
+
+  useEffect(() => {
+    if (verifiedProjects && verifiedProjects?.length > 0) {
+      const hasValidProject = verifiedProjects.some((project) => project.has_changed_path === false)
+
+      if (!hasValidProject) {
+        navigate('/')
+      }
+      removeInvalidaProjectPaths(verifiedProjects)
+    }
+  }, [verifiedProjects])
 
   useEffect(() => {
     verifyProjectsPaths(data ?? [])
