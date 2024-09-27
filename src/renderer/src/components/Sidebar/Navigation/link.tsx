@@ -1,4 +1,4 @@
-import { Folder, FolderOpen } from '@phosphor-icons/react'
+import { Book, BookOpen } from '@phosphor-icons/react'
 import clsx from 'clsx'
 import { ReactNode } from 'react'
 import { NavLink } from 'react-router-dom'
@@ -23,9 +23,9 @@ export function Link({ children, to, selected = false }: LinkProps): JSX.Element
       }
     >
       {selected ? (
-        <FolderOpen weight="bold" className="h-4 w-4" />
+        <BookOpen weight="bold" className="h-4 w-4" />
       ) : (
-        <Folder weight="bold" className="h-4 w-4" />
+        <Book weight="bold" className="h-4 w-4" />
       )}
       <span className="truncate flex-1">{children}</span>
     </NavLink>

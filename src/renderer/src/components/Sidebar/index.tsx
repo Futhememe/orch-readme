@@ -8,6 +8,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { IProject, IVerifiedProjects } from '@/src/shared/types/ipc'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { FileTreeDemo } from './FileTree'
 
 export function Sidebar(): JSX.Element {
   const isMacOS = process.platform === 'darwin'
@@ -115,14 +116,17 @@ export function Sidebar(): JSX.Element {
                   {document.title || 'Untitled'}
                 </Navigation.Link>
               ))}
-              {/* <Navigation.Link to="">Primeira pasta</Navigation.Link>
-              <Navigation.Link to="">Segunda pasta</Navigation.Link>
-              <Navigation.Link to="">Draft</Navigation.Link> */}
             </Navigation.SectionContent>
           </Navigation.Section>
         </Navigation.Root>
 
         <CreateDocument />
+
+        <div className="w-full pl-4 pr-4">
+          <div className="w-full h-[2px] bg-grey-600" />
+        </div>
+
+        <FileTreeDemo />
       </div>
     </Collapsible.Content>
   )
