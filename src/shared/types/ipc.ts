@@ -1,3 +1,5 @@
+import { Dirent } from 'fs'
+
 export interface IProject {
   id: string
   title: string
@@ -10,9 +12,9 @@ export interface IProject {
 
 export interface CreateProjectRequest extends Omit<IProject, 'id'> {}
 
-// export interface FetchDocumentRequest {
-//   id: string
-// }
+export interface FetchProjectRequest {
+  id: string
+}
 
 export interface DeleteProjectRequest {
   id: string
@@ -38,9 +40,9 @@ export interface FetchAllProjectsResponse {
   data: IProject[]
 }
 
-// export interface FetchDocumentResponse {
-//   data: IDocument
-// }
+export interface FetchProjectResponse {
+  data: IProject
+}
 
 export interface CreateProjectResponse {
   data: IProject
@@ -49,4 +51,9 @@ export interface CreateProjectResponse {
 export interface SelectFolderToProjectResponse {
   success: boolean
   data: string[]
+}
+
+export interface FetchProjectFiles {
+  success: boolean
+  data: Dirent[]
 }

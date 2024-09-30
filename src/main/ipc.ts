@@ -8,18 +8,32 @@ import {
   CreateProjectResponse,
   IProject,
   DeleteProjectRequest,
-  VerifyProjectPathsResponse
+  VerifyProjectPathsResponse,
+  FetchProjectResponse,
+  FetchProjectRequest,
+  FetchProjectFiles
 } from '../shared/types/ipc'
 import { randomUUID } from 'node:crypto'
 import { configRspress } from './utils/create-project'
 import { transformProjectName } from './utils/transform-project-name'
-import { existsSync } from 'node:fs'
+import { existsSync, readdirSync } from 'node:fs'
 
 ipcMain.handle(IPC.PROJECTS.FETCH_ALL, async (): Promise<FetchAllProjectsResponse> => {
   return {
     data: Object.values(store.get('projects'))
   }
 })
+
+ipcMain.handle(
+  IPC.PROJECTS.FETCH_BY_ID,
+  async (_, { id }: FetchProjectRequest): Promise<FetchProjectResponse> => {
+    const project = store.get(`projects.${id}`) as IProject
+
+    return {
+      data: project
+    }
+  }
+)
 
 ipcMain.handle(IPC.PROJECTS.DELETE, async (_, { id }: DeleteProjectRequest): Promise<void> => {
   // @ts-ignore cant get id
@@ -69,6 +83,31 @@ ipcMain.handle(
 
     return {
       data: project
+    }
+  }
+)
+
+ipcMain.handle(
+  IPC.PROJECTS.GET_PROJECT_FILES,
+  async (_, { id }: FetchProjectRequest): Promise<FetchProjectFiles> => {
+    const project = store.get(`projects.${id}`) as IProject
+
+    if (!project) {
+      return { success: false, data: [] }
+    }
+
+    try {
+      const dirent = await readdirSync(`${project.path}/docs`, {
+        encoding: 'utf-8',
+        withFileTypes: true
+      })
+
+      return {
+        success: true,
+        data: dirent
+      }
+    } catch (error) {
+      return { success: false, data: [] }
     }
   }
 )

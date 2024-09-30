@@ -1,11 +1,42 @@
+import { useParams } from 'react-router-dom'
 import { File, Folder, Tree } from '../../FileTree'
+import { useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
+// import { Dirent } from 'fs'
+// import { Element } from './types'
 
 export function FileTreeDemo(): JSX.Element {
+  const { id } = useParams<{ id: string }>()
+
+  const { data: projectFiles, refetch: getProjectFiles } = useQuery({
+    queryKey: ['project', id],
+    queryFn: async () => {
+      const res = await window.api.getProjectFiles({ id: id! })
+
+      console.log(res)
+
+      return res?.data
+    }
+  })
+
+  // const createElements = (files: Dirent[]): Element[] => {
+
+  // }
+
+  useEffect(() => {
+    if (projectFiles && projectFiles?.length > 0) {
+      console.log('log: ', projectFiles)
+    }
+  }, [projectFiles])
+
+  useEffect(() => {
+    getProjectFiles()
+  }, [])
+
   return (
     <Tree
       className="p-2 overflow-hidden rounded-md bg-background"
-      initialSelectedId="7"
-      initialExpandedItems={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']}
+      initialExpandedItems={[]}
       elements={ELEMENTS}
     >
       <Folder element="src" value="1">

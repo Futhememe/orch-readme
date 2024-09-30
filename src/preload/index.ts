@@ -7,8 +7,12 @@ import {
   SelectFolderToProjectResponse,
   DeleteProjectRequest,
   VerifyProjectPathsRequest,
-  VerifyProjectPathsResponse
+  VerifyProjectPathsResponse,
+  FetchProjectRequest,
+  FetchProjectResponse,
+  FetchProjectFiles
 } from '../shared/types/ipc'
+import { lstatSync } from 'fs'
 
 // Custom APIs for renderer
 export const api = {
@@ -20,9 +24,9 @@ export const api = {
     return ipcRenderer.invoke(IPC.ACTIONS.SELECT_FOLDER)
   },
 
-  // fetchDocument(req: FetchDocumentRequest): Promise<FetchDocumentResponse> {
-  //   return ipcRenderer.invoke(IPC.DOCUMENTS.FETCH, req)
-  // },
+  fetchProjectById(req: FetchProjectRequest): Promise<FetchProjectResponse> {
+    return ipcRenderer.invoke(IPC.PROJECTS.FETCH_BY_ID, req)
+  },
 
   createProject(req: CreateProjectRequest): Promise<CreateProjectResponse> {
     return ipcRenderer.invoke(IPC.PROJECTS.CREATE, req)
@@ -32,12 +36,20 @@ export const api = {
   //   return ipcRenderer.invoke(IPC.DOCUMENTS.SAVE, req)
   // },
 
+  getProjectFiles(req: FetchProjectRequest): Promise<FetchProjectFiles> {
+    return ipcRenderer.invoke(IPC.PROJECTS.GET_PROJECT_FILES, req)
+  },
+
   deleteProject(req: DeleteProjectRequest): Promise<void> {
     return ipcRenderer.invoke(IPC.PROJECTS.DELETE, req)
   },
 
   verifyProjectsPaths(req: VerifyProjectPathsRequest): Promise<VerifyProjectPathsResponse> {
     return ipcRenderer.invoke(IPC.PROJECTS.VERIFY_PATHS, req)
+  },
+
+  isDir(path: string): boolean {
+    return lstatSync(path).isDirectory()
   }
 
   // onNewDocumentRequest(callback: () => void) {
