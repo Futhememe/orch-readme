@@ -289,7 +289,10 @@ const File = forwardRef<
             isSelectable ? 'cursor-pointer' : 'opacity-50 cursor-not-allowed',
             className
           )}
-          onClick={() => selectItem(value)}
+          onClick={(e) => {
+            props?.onClick?.(e)
+            selectItem(value)
+          }}
         >
           {fileIcon ?? <FileIcon weight="bold" className="size-4" />}
           {children}

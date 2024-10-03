@@ -1,10 +1,11 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { File, Folder, Tree, TreeViewElement } from '../../FileTree'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
 export function FileTreeDemo(): JSX.Element {
   const { id } = useParams<{ id: string }>()
+  const navigate = useNavigate()
 
   const { data: projectFiles, refetch: getProjectFiles } = useQuery({
     queryKey: ['project', id],
@@ -22,7 +23,12 @@ export function FileTreeDemo(): JSX.Element {
             {node.children && renderTree(node.children)}
           </Folder>
         ) : (
-          <File value={node.id}>
+          <File
+            value={node.id}
+            onClick={() => {
+              navigate(`/project/${id}/document/${node.id}`)
+            }}
+          >
             <p>{node.name}</p>
           </File>
         )}

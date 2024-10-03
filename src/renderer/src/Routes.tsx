@@ -12,8 +12,9 @@ export function Routes(): JSX.Element {
         <Route path="/" element={<Default />}>
           <Route path="/" element={<Blank />} />
 
-          <Route path="/project/:id" element={<h1>Hello</h1>} />
-          <Route path="/document/:id" element={<Document />} />
+          <Route path="/project/:id">
+            <Route path="/project/:id/document/:documentId" element={<Document />} />
+          </Route>
         </Route>
       }
     />
