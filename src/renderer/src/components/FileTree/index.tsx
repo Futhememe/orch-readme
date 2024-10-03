@@ -19,8 +19,10 @@ import {
 import { cn } from '../../shadcn/utils/utils'
 import { ScrollArea } from '../../shadcn/components/ui/scroll-area'
 import { Button } from '../../shadcn/components/ui/button'
+import { FileType } from '@/src/shared/types/ipc'
 
 type TreeViewElement = {
+  type: FileType
   id: string
   name: string
   isSelectable?: boolean
