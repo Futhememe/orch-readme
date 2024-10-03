@@ -74,7 +74,7 @@ ipcMain.handle(
 
     const project: IProject = {
       id,
-      title: formattedText,
+      title: title,
       path: fullPath
     }
 

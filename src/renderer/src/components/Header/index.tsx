@@ -3,37 +3,25 @@ import clsx from 'clsx'
 import { CaretDoubleRight, Plus } from '@phosphor-icons/react'
 // import { useParams } from 'react-router-dom'
 import { Button } from '../../shadcn/components/ui/button'
+import { useParams } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
 
 interface IHeader {
   isSidebarOpen: boolean
 }
 
 export function Header({ isSidebarOpen }: IHeader): JSX.Element {
-  // const { id } = useParams<{ id: string }>()
-  // const queryClient = useQueryClient()
-  // const navigate = useNavigate()
+  const { id } = useParams<{ id: string }>()
   const isMacOS = process.platform === 'darwin'
 
-  // const { data: documents } = useQuery(['documents'], async () => {
-  //   const res = await window.api.fetchDocuments()
+  const { data: project } = useQuery({
+    queryKey: ['projects', id],
+    queryFn: async () => {
+      const res = await window.api.fetchProjectById({ id: id! })
 
-  //   return res.data
-  // })
-
-  // const { mutateAsync: deleteDocument, isLoading: isDeletingDocument } = useMutation(
-  //   async () => {
-  //     await window.api.deleteDocument({ id: id! })
-  //   },
-  //   {
-  //     onSuccess: () => {
-  //       queryClient.setQueryData<IDocument[]>(['documents'], (documents) => {
-  //         return documents?.filter((document) => document?.id !== id)
-  //       })
-
-  //       navigate('/')
-  //     },
-  //   },
-  // )
+      return res.data
+    }
+  })
 
   return (
     <div
@@ -72,9 +60,7 @@ export function Header({ isSidebarOpen }: IHeader): JSX.Element {
       )} */}
       <div className="inline-flex flex-1">
         <div className="flex flex-1 w-full items-center justify-between">
-          <p className="text-base text-blackfont-500 font-[501] region-no-drag">
-            Pasta selecionada
-          </p>
+          <p className="text-base text-blackfont-500 font-[501] region-no-drag">{project?.title}</p>
           <Button variant="outline" size="icon" className="region-no-drag">
             <Plus className="h-4 w-4" />
           </Button>

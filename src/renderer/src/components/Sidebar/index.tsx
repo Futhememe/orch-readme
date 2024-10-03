@@ -7,14 +7,15 @@ import { CreateDocument } from './CreateDocument'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { IProject, IVerifiedProjects } from '@/src/shared/types/ipc'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { FileTreeDemo } from './FileTree'
 
 export function Sidebar(): JSX.Element {
   const isMacOS = process.platform === 'darwin'
+  const { id } = useParams<{ id: string }>()
 
   const navigate = useNavigate()
-  const location = useLocation()
+  // const location = useLocation()
 
   const { data, refetch: refetchAllProjects } = useQuery({
     queryKey: ['projects'],
@@ -110,7 +111,7 @@ export function Sidebar(): JSX.Element {
               {data?.map((document) => (
                 <Navigation.Link
                   to={`/project/${document.id}`}
-                  selected={location.pathname === `/project/${document.id}`}
+                  selected={document.id === id}
                   key={document.id}
                 >
                   {document.title || 'Untitled'}
