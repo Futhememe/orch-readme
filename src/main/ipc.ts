@@ -16,7 +16,8 @@ import {
 import { randomUUID } from 'node:crypto'
 import { configRspress } from './utils/create-project'
 import { transformProjectName } from './utils/transform-project-name'
-import { existsSync, readdirSync } from 'node:fs'
+import { existsSync } from 'node:fs'
+import { getFolderStructure } from './utils/get-folder-structure'
 
 ipcMain.handle(IPC.PROJECTS.FETCH_ALL, async (): Promise<FetchAllProjectsResponse> => {
   return {
@@ -97,10 +98,7 @@ ipcMain.handle(
     }
 
     try {
-      const dirent = await readdirSync(`${project.path}/docs`, {
-        encoding: 'utf-8',
-        withFileTypes: true
-      })
+      const dirent = getFolderStructure(`${project.path}/docs`)
 
       return {
         success: true,

@@ -12,7 +12,6 @@ import {
   FetchProjectResponse,
   FetchProjectFiles
 } from '../shared/types/ipc'
-import { lstatSync } from 'fs'
 
 // Custom APIs for renderer
 export const api = {
@@ -46,10 +45,6 @@ export const api = {
 
   verifyProjectsPaths(req: VerifyProjectPathsRequest): Promise<VerifyProjectPathsResponse> {
     return ipcRenderer.invoke(IPC.PROJECTS.VERIFY_PATHS, req)
-  },
-
-  isDir(path: string): boolean {
-    return lstatSync(path).isDirectory()
   }
 
   // onNewDocumentRequest(callback: () => void) {

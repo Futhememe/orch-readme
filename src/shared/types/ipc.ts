@@ -1,9 +1,17 @@
-import { Dirent } from 'fs'
-
 export interface IProject {
   id: string
   title: string
   path: string
+}
+
+export type FileType = 'directory' | 'file'
+
+export type DirElement = {
+  type: FileType
+  id: string
+  isSelectable: boolean
+  name: string
+  children?: Element[]
 }
 
 /**
@@ -55,5 +63,5 @@ export interface SelectFolderToProjectResponse {
 
 export interface FetchProjectFiles {
   success: boolean
-  data: Dirent[]
+  data: DirElement[]
 }
